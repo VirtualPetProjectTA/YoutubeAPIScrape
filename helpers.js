@@ -1,6 +1,25 @@
 const { youtube } = require("scrape-youtube");
 const nlp = require("compromise");
 const { key18 } = require("./constants");
+const ytdl = require("ytdl-core");
+
+const responseTemplate = ({ response, result, status, message }) => {
+  console.log("respon : ", response);
+  if (status === 200) {
+    return response.send({
+      status,
+      data: result,
+      message: "Successfully get the datas",
+    });
+  } else {
+    return response?.send({ status, data: result, message });
+  }
+};
+
+const fetchDetailYoutubeVideos = async (link) => {
+  const details = await ytdl.getInfo(link);
+  return details;
+};
 
 const fetchYoutubeSearchData = async (searchKey = "") => {
   const options = {
@@ -28,6 +47,24 @@ const fetchYoutubeSearchData = async (searchKey = "") => {
   }
 };
 
+const fetchAndResponseHandler = (asyncFunctions, response) => {
+  return asyncFunctions
+    .then((result) => {
+      responseTemplate({
+        response,
+        result,
+        status: 200,
+      });
+    })
+    .catch((e) => {
+      responseTemplate({
+        response,
+        result: e,
+        status: 400,
+      });
+    });
+};
+
 const randomHandler = (arrTargetted = []) => {
   return Math.floor(Math.random()) * [arrTargetted]?.length;
 };
@@ -40,4 +77,9 @@ const keyCorpus = () => {
 
   return randomSearchKeyChoosenInit;
 };
-module.exports = { fetchYoutubeSearchData, keyCorpus };
+module.exports = {
+  fetchYoutubeSearchData,
+  keyCorpus,
+  fetchDetailYoutubeVideos,
+  fetchAndResponseHandler,
+};
