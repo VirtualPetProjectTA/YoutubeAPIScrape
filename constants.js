@@ -1,0 +1,26 @@
+const key18 = [
+  "boobs",
+  "sexy",
+  "sex",
+  "hot woman",
+  "hot man",
+  "hot loli",
+  "milf",
+  "big boobs",
+  "big breasts",
+  "oppai",
+  "fuck",
+  "pussy",
+  "dick",
+  "sange",
+  "toket gede",
+  "toket",
+  "shit",
+  "ngentod",
+  "ngentot",
+  "hentai",
+  "tits",
+  "tit",
+];
+
+module.exports = { key18 };
